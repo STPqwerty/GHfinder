@@ -1,0 +1,23 @@
+class Github {
+  constructor() {
+    // Доступ к запросам
+    this.client_id = '743a97f8b31b1e6f141e';
+    this.client_secret = '06b2ed3faa474c2435c1143dd3f3dcb6cf5549db';
+    this.repos_count = 5;
+    this.repos_sort = 'created: asc';
+  }
+
+  async getUser(user) {
+    const profileResponse = await fetch(`https://api.github.com/users/${user}?client_id=${this.client_id}&client_secret=${this.client_secret}`);
+
+    const repoResponse = await fetch(`https://api.github.com/users/${user}/repos?per_page=${this.repos_count}&sort=${this.repos_sort}&client_id=${this.client_id}&client_secret=${this.client_secret}`);
+
+    const profile = await profileResponse.json();
+    const repos = await repoResponse.json();
+
+    return {
+      profile,
+      repos
+    }
+  }
+}
